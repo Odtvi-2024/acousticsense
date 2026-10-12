@@ -1147,6 +1147,7 @@ body {
       <button class="action-btn" id="btn-save-preset" title="Guardar configuración actual como preset">💾 Guardar</button>
       <button class="action-btn highlight" id="btn-open-rta" title="Ver analizador de espectro de audio en tiempo real">📊 RTA</button>
       <button class="action-btn" id="btn-export-apo" title="Exportar archivo de configuración para Equalizer APO (Windows)">⚙️ Exportar APO</button>
+      <button class="action-btn highlight" id="btn-install-app" style="background: linear-gradient(180deg, #ff8800 0%, #e65c00 100%); color: #000; font-weight: 800; border-color: #ffaa00;" title="Instalar en tu Celular o PC">📲 Instalar App</button>
       <button class="action-btn" id="btn-open-guide" title="Instrucciones para PC, Android y otros">❓ Guía</button>
     </div>
   </header>
@@ -1469,6 +1470,35 @@ body {
       </div>
       <div id="playlist-items-container" style="max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
         <p style="font-size: 0.8rem; color: #8fa0b3; text-align: center; padding: 20px;">No has cargado ninguna carpeta o archivo todavía.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: INSTALAR APP EN CELULAR / PC ==================== -->
+  <div class="modal-overlay" id="modal-install-guide">
+    <div class="modal-window" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3>📲 Instalar AcousticSense en tu Dispositivo</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div style="font-size: 0.88rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
+        <div style="background: #111418; padding: 12px; border-radius: 6px; border-left: 3px solid #ff7700;">
+          <h4 style="color: #ffaa00; margin-bottom: 4px;">📱 En Celulares Android (Chrome / Brave / Edge):</h4>
+          <p>Toca los <strong>tres puntos (⋮)</strong> en la esquina superior derecha del navegador y selecciona <strong>"Instalar aplicación"</strong> o <strong>"Añadir a la pantalla de inicio"</strong>. La app aparecerá en tu teléfono con su propio icono.</p>
+        </div>
+        <div style="background: #111418; padding: 12px; border-radius: 6px; border-left: 3px solid #00e5ff;">
+          <h4 style="color: #00e5ff; margin-bottom: 4px;">🍏 En iPhone / iPad (Safari):</h4>
+          <p>Toca el botón <strong>Compartir</strong> (el icono cuadrado con una flecha hacia arriba) y selecciona <strong>"Añadir a la pantalla de inicio"</strong>.</p>
+        </div>
+        <div style="background: #111418; padding: 12px; border-radius: 6px; border-left: 3px solid #00e676;">
+          <h4 style="color: #00e676; margin-bottom: 4px;">💻 En Computador (Windows / Mac / Linux):</h4>
+          <p>Haz clic en el icono de instalación que aparece a la derecha en la barra de direcciones de Chrome, Edge o Brave, o usa el menú del navegador ➔ <strong>"Instalar AcousticSense"</strong>.</p>
+        </div>
+        <div style="text-align: center; margin-top: 8px;">
+          <a href="AcousticSense_Portatil.html" download="AcousticSense_FBQ-31.html" class="action-btn" style="display: inline-block; background: #242b35; color: #fff; text-decoration: none; padding: 10px 16px; border: 1px solid #485566; border-radius: 6px; font-weight: bold;">
+            💾 Descargar archivo autónomo (.html) para usar sin internet
+          </a>
+        </div>
       </div>
     </div>
   </div>
