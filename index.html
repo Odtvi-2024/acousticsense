@@ -956,9 +956,10 @@ body {
   z-index: 10000;
 }
 
-/* Adaptabilidad Móvil y Pantallas Táctiles (Android / iOS / Tablets / PC) */
+/* Adaptabilidad Móvil y Pantallas Táctiles (Exclusivo para Celulares y Tablets) */
+/* Nota: En pantallas de PC / Notebook (> 992px) no altera absolutamente nada */
 
-@media (max-width: 1200px) {
+@media (max-width: 1200px) and (min-width: 993px) {
   .rack-ear {
     width: 36px;
     min-width: 36px;
@@ -974,119 +975,336 @@ body {
   }
 }
 
+/* ==================== DISEÑO EXCLUSIVO MÓVIL (CELULARES Y TABLETS <= 992px) ==================== */
 @media (max-width: 992px) {
-  body {
-    padding: 6px;
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    padding: 4px;
+    margin: 0;
   }
 
+  /* 1. Barra Superior ordenada en Cuadrícula Simétrica */
   .top-control-bar {
-    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
     gap: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+
+  .brand-badge {
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #2d343e;
   }
 
   .brand-badge h1 {
-    font-size: 1rem;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
   }
 
-  /* Selector de vista móvil en la parte superior */
-  .mobile-view-tabs {
-    display: flex !important;
+  /* 4 Botones de Fuente en 1 sola fila perfecta */
+  .source-selectors {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
     width: 100%;
-    margin-top: 6px;
+    padding: 5px;
+  }
+
+  .source-btn {
+    justify-content: center;
+    padding: 8px 2px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    gap: 3px;
+  }
+
+  /* Reproductor de Audio adaptado al 100% del ancho sin desbordar */
+  .audio-player-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .player-btn {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .track-info-box {
+    min-width: 0 !important;
+    max-width: none !important;
+    flex: 1 1 110px;
+    overflow: hidden;
+    padding: 0 4px;
+  }
+
+  .file-name-display {
+    max-width: 100%;
+    font-size: 0.75rem;
+  }
+
+  .time-display {
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .player-seek {
+    width: 100%;
+    height: 8px;
+    order: 10;
+    margin-top: 4px;
+  }
+
+  /* Sección de Presets y Botones de Herramientas en Cuadrícula */
+  .preset-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  .preset-select {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 9px 10px;
+    font-size: 0.82rem;
+  }
+
+  #btn-install-app {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 9px;
+    font-size: 0.82rem;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .preset-section .action-btn {
+    padding: 8px 4px;
+    font-size: 0.71rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  /* 2. Pestañas de Selección de Canal en Móvil */
+  .mobile-view-tabs {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    margin: 0 0 8px 0;
     gap: 6px;
   }
 
   .mobile-tab-btn {
-    flex: 1;
-    background: #1e2228;
+    background: #1a1e24;
     color: #9aa4b0;
     border: 1px solid #333a44;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 0.76rem;
+    padding: 9px 4px;
+    border-radius: 6px;
+    font-size: 0.74rem;
     font-weight: 700;
     text-align: center;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .mobile-tab-btn.active {
     background: #ff7700;
     color: #000;
     border-color: #ffaa00;
+    box-shadow: 0 0 10px rgba(255, 119, 0, 0.4);
   }
 
+  /* 3. Chasis del Rack al 100% en Móvil */
+  .rack-ear {
+    display: none !important;
+  }
+
+  .rack-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .rack-main-chassis {
+    width: 100%;
+  }
+
+  .rack-header-strip {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .rack-model-title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+  }
+
+  .rack-model-title h2 {
+    font-size: 0.98rem;
+  }
+
+  .rack-model-subtitle {
+    font-size: 0.58rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .rack-global-tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .global-toggle {
+    justify-content: center;
+    padding: 7px 6px;
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  /* 4. Bloque de Canal: Vúmetro + Perillas + 31 Faders */
   .channel-strip {
     flex-direction: column;
-    padding: 6px;
+    padding: 8px;
+    gap: 8px;
   }
 
   .channel-master-block {
     width: 100%;
-    min-width: 100%;
-    margin-bottom: 8px;
+    min-width: 0;
+    margin-bottom: 0;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 8px;
   }
 
+  .channel-meter-column {
+    width: 56px;
+    min-width: 56px;
+  }
+
+  .channel-knobs-column {
+    flex: 1;
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .ch-push-buttons {
+    gap: 6px;
+    margin: 4px 0;
+  }
+
+  .rack-push-btn {
+    padding: 6px 4px;
+    font-size: 0.66rem;
+  }
+
+  .knobs-cluster {
+    padding: 8px 4px;
+    gap: 6px;
+  }
+
+  .knob-body {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Carrusel horizontal suave para las 31 bandas */
   .channel-eq-faders {
     margin-left: 0;
-    padding: 8px 4px;
+    width: 100%;
+    padding: 10px 6px;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   .fader-slot {
-    min-width: 38px;
+    min-width: 40px;
   }
 
   .fader-track-container {
-    height: 140px; /* Mayor recorrido para dedos en táctil */
+    height: 145px;
   }
 
   .fader-handle {
     width: 30px;
-    height: 18px; /* Manillas más fáciles de arrastrar con los dedos */
+    height: 18px;
   }
 
   /* Ocultar canal inactivo en modo móvil según la pestaña */
   .channel-strip.mobile-hidden {
     display: none !important;
   }
-}
 
-@media (max-width: 600px) {
-  .rack-ear {
-    display: none; /* En teléfonos ocultamos las orejas de rack para ganar el 100% del ancho */
-  }
-
-  .rack-container {
-    border-radius: 4px;
-  }
-
-  .rack-header-strip {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .rack-global-tools {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .top-control-bar {
+  /* 5. Pie de Rack y Subwoofer ordenado */
+  .rack-footer-strip {
     flex-direction: column;
     align-items: stretch;
+    padding: 10px;
+    gap: 8px;
   }
 
-  .source-selectors, .audio-player-controls, .preset-section {
+  .subwoofer-unit {
     width: 100%;
     justify-content: space-between;
+    padding: 8px 10px;
   }
 
-  .file-name-display {
-    max-width: 90px;
+  .quick-tools-cluster {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .quick-tools-cluster span {
+    font-size: 0.65rem !important;
+    line-height: 1.3;
+    display: block;
   }
 }
 
-/* Soporte táctil optimizado para prevenir scroll de página al mover faders */
+/* Ajustes adicionales para teléfonos pequeños en vertical (<= 420px) */
+@media (max-width: 420px) {
+  .source-btn {
+    font-size: 0.66rem;
+    padding: 7px 2px;
+  }
+
+  .preset-section .action-btn {
+    font-size: 0.66rem;
+    padding: 7px 2px;
+  }
+
+  .mobile-tab-btn {
+    font-size: 0.68rem;
+    padding: 8px 2px;
+  }
+}
+
+/* Soporte táctil optimizado para prevenir scroll accidental al mover faders o perillas */
 .fader-track-container, .fader-handle, .rotary-knob-wrapper {
   touch-action: none;
 }
@@ -3136,25 +3354,34 @@ class UIController {
     const stripCh1 = document.getElementById('strip-ch1');
     const stripCh2 = document.getElementById('strip-ch2');
 
+    const applyTab = (view) => {
+      tabs.forEach(t => {
+        t.classList.toggle('active', t.dataset.view === view);
+      });
+      this.activeMobileTab = view;
+
+      if (view === 'ch1') {
+        stripCh1.classList.remove('mobile-hidden');
+        stripCh2.classList.add('mobile-hidden');
+      } else if (view === 'ch2') {
+        stripCh1.classList.add('mobile-hidden');
+        stripCh2.classList.remove('mobile-hidden');
+      } else {
+        stripCh1.classList.remove('mobile-hidden');
+        stripCh2.classList.remove('mobile-hidden');
+      }
+    };
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const view = tab.dataset.view;
-        this.activeMobileTab = view;
-
-        if (view === 'ch1') {
-          stripCh1.classList.remove('mobile-hidden');
-          stripCh2.classList.add('mobile-hidden');
-        } else if (view === 'ch2') {
-          stripCh1.classList.add('mobile-hidden');
-          stripCh2.classList.remove('mobile-hidden');
-        } else {
-          stripCh1.classList.remove('mobile-hidden');
-          stripCh2.classList.remove('mobile-hidden');
-        }
+        applyTab(tab.dataset.view);
       });
     });
+
+    // En celulares/tablets mostrar Canal 1 por defecto para evitar apilar dos racks gigantes
+    if (window.innerWidth <= 992) {
+      applyTab('ch1');
+    }
   }
 
   // --- Bucle Render 60 FPS (Vúmetros, FBQ LEDs) ---
@@ -3315,12 +3542,39 @@ function startApp() {
     window.addEventListener('pointerdown', unlockAudio, { once: true });
     window.addEventListener('keydown', unlockAudio, { once: true });
 
+    // Manejo de Instalación PWA (Móvil y Escritorio)
+    let deferredPrompt = null;
+    const btnInstall = document.getElementById('btn-install-app');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    if (btnInstall) {
+      btnInstall.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          try {
+            deferredPrompt.prompt();
+            const choice = await deferredPrompt.userChoice;
+            if (choice.outcome === 'accepted') {
+              deferredPrompt = null;
+            }
+          } catch (e) {
+            console.log('Prompt error:', e);
+          }
+        } else {
+          const modal = document.getElementById('modal-install-guide');
+          if (modal) modal.classList.add('open');
+        }
+      });
+    }
+
     // 3. Tareas secundarias de PWA (solo cuando se ejecuta bajo protocolo http/https)
     if (window.location.protocol.startsWith('http')) {
       if (window.location.protocol.startsWith('http') && 'caches' in window) {
         caches.keys().then((keys) => {
           keys.forEach((key) => {
-            if (key !== 'acousticsense-v2') caches.delete(key);
+            if (key !== 'acousticsense-v3') caches.delete(key);
           });
         }).catch(() => {});
       }
