@@ -1,0 +1,134 @@
+/* Adaptabilidad Móvil y Pantallas Táctiles (Android / iOS / Tablets / PC) */
+
+@media (max-width: 1200px) {
+  .rack-ear {
+    width: 36px;
+    min-width: 36px;
+    padding: 16px 2px;
+  }
+  .ear-branding {
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+  }
+  .rack-screw-slot {
+    width: 10px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  body {
+    padding: 6px;
+  }
+
+  .top-control-bar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .brand-badge h1 {
+    font-size: 1rem;
+  }
+
+  /* Selector de vista móvil en la parte superior */
+  .mobile-view-tabs {
+    display: flex !important;
+    width: 100%;
+    margin-top: 6px;
+    gap: 6px;
+  }
+
+  .mobile-tab-btn {
+    flex: 1;
+    background: #1e2228;
+    color: #9aa4b0;
+    border: 1px solid #333a44;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .mobile-tab-btn.active {
+    background: #ff7700;
+    color: #000;
+    border-color: #ffaa00;
+  }
+
+  .channel-strip {
+    flex-direction: column;
+    padding: 6px;
+  }
+
+  .channel-master-block {
+    width: 100%;
+    min-width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .channel-eq-faders {
+    margin-left: 0;
+    padding: 8px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .fader-slot {
+    min-width: 38px;
+  }
+
+  .fader-track-container {
+    height: 140px; /* Mayor recorrido para dedos en táctil */
+  }
+
+  .fader-handle {
+    width: 30px;
+    height: 18px; /* Manillas más fáciles de arrastrar con los dedos */
+  }
+
+  /* Ocultar canal inactivo en modo móvil según la pestaña */
+  .channel-strip.mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .rack-ear {
+    display: none; /* En teléfonos ocultamos las orejas de rack para ganar el 100% del ancho */
+  }
+
+  .rack-container {
+    border-radius: 4px;
+  }
+
+  .rack-header-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .rack-global-tools {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .top-control-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .source-selectors, .audio-player-controls, .preset-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .file-name-display {
+    max-width: 90px;
+  }
+}
+
+/* Soporte táctil optimizado para prevenir scroll de página al mover faders */
+.fader-track-container, .fader-handle, .rotary-knob-wrapper {
+  touch-action: none;
+}

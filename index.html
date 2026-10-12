@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#121417">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>AcousticSense FBQ-31 - Ecualizador Gráfico Digital 31 Bandas</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/rack.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="assets/acousticsense-logo.svg">
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR DE ENTRADAS Y HERRAMIENTAS -->
+  <header class="top-control-bar">
+    <div class="brand-badge">
+      <h1>ACOUSTICSENSE</h1>
+      <span class="model-tag">FBQ-31 DIGITAL</span>
+    </div>
+
+    <!-- Selector de Fuentes de Audio -->
+    <div class="source-selectors">
+      <button class="source-btn" id="btn-src-file" title="Seleccionar uno o varios archivos MP3, WAV, FLAC...">
+        <span>📁</span> Archivos
+      </button>
+      <input type="file" id="file-input" accept="audio/*" multiple style="display: none;">
+
+      <button class="source-btn" id="btn-src-folder" title="Seleccionar una carpeta completa de música">
+        <span>📂</span> Carpeta
+      </button>
+      <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
+
+      <button class="source-btn" id="btn-src-mic" title="Procesar audio en vivo desde Micrófono o Interfaz de Audio">
+        <span>🎤</span> Mic / Línea
+      </button>
+
+      <button class="source-btn" id="btn-src-gen" title="Generador de Ruido Rosa, Blanco y Seno">
+        <span>⚡</span> Generador
+      </button>
+    </div>
+
+    <!-- Reproductor Integrado con Lista de Reproducción (Playlist) -->
+    <div class="audio-player-controls">
+      <audio id="audio-file-element"></audio>
+      <button class="player-btn" id="btn-player-prev" title="Pista Anterior">&#9198;</button>
+      <button class="player-btn" id="btn-player-play" title="Reproducir / Pausar">&#9658;</button>
+      <button class="player-btn" id="btn-player-next" title="Pista Siguiente">&#9197;</button>
+      <button class="player-btn" id="btn-player-stop" title="Detener">&#9632;</button>
+      
+      <div class="track-info-box" style="display: flex; flex-direction: column; min-width: 140px; max-width: 200px;">
+        <span class="file-name-display" id="file-name-display">Sin canciones cargadas</span>
+        <span class="playlist-counter" id="playlist-counter" style="font-size: 0.65rem; color: #ffaa00; font-family: var(--font-mono);">0 canciones</span>
+      </div>
+
+      <input type="range" class="player-seek" id="player-seek" value="0" min="0" max="100" step="0.1">
+      <span class="time-display" id="time-display">0:00 / 0:00</span>
+      <button class="player-btn" id="btn-open-playlist" title="Ver lista de canciones cargadas">📋</button>
+    </div>
+
+    <!-- Presets y Herramientas -->
+    <div class="preset-section">
+      <select class="preset-select" id="preset-selector"></select>
+      <button class="action-btn" id="btn-save-preset" title="Guardar configuración actual como preset">💾 Guardar</button>
+      <button class="action-btn highlight" id="btn-open-rta" title="Ver analizador de espectro de audio en tiempo real">📊 RTA</button>
+      <button class="action-btn" id="btn-export-apo" title="Exportar archivo de configuración para Equalizer APO (Windows)">⚙️ Exportar APO</button>
+      <button class="action-btn" id="btn-open-guide" title="Instrucciones para PC, Android y otros">❓ Guía</button>
+    </div>
+  </header>
+
+  <!-- Pestañas de Vista Rápida para Celulares y Tablets -->
+  <div class="mobile-view-tabs" style="display: none;">
+    <button class="mobile-tab-btn active" data-view="both">Ambos Canales (L + R)</button>
+    <button class="mobile-tab-btn" data-view="ch1">Canal 1 (Izquierdo)</button>
+    <button class="mobile-tab-btn" data-view="ch2">Canal 2 (Derecho)</button>
+  </div>
+
+  <!-- ==================== CHASIS RACK 19" PRINCIPAL ==================== -->
+  <main class="rack-container">
+    
+    <!-- Oreja Izquierda de Montaje Rack 19" -->
+    <aside class="rack-ear left">
+      <div class="rack-screw-slot"></div>
+      <div class="ear-branding">ACOUSTICSENSE FBQ-31</div>
+      <div class="rack-screw-slot"></div>
+    </aside>
+
+    <!-- Chasis Central Negro Cepillado -->
+    <section class="rack-main-chassis">
+      
+      <!-- Franja Superior de Cabecera -->
+      <div class="rack-header-strip">
+        <div class="rack-model-title">
+          <h2>ACOUSTICSENSE FBQ-31</h2>
+          <span class="rack-model-subtitle">High-Definition 31-Band Stereo Graphic Equalizer with FBQ Feedback Detection</span>
+        </div>
+        <div class="rack-global-tools">
+          <button class="global-toggle active" id="btn-stereo-link">
+            <span class="indicator-led"></span> Enlace Estéreo (L+R)
+          </button>
+          <button class="global-toggle" id="btn-reset-all">
+            <span>&#8634;</span> Restablecer Plano (0 dB)
+          </button>
+        </div>
+      </div>
+
+      <!-- CANAL 1 (SUPERIOR / IZQUIERDO) -->
+      <article class="channel-strip" id="strip-ch1">
+        <div class="channel-master-block">
+          <!-- Vúmetro de 12 Segmentos Canal 1 -->
+          <div class="channel-meter-column" id="meter-ch1">
+            <div class="meter-title">CH 1 METER</div>
+          </div>
+
+          <!-- Controles y Knobs Canal 1 -->
+          <div class="channel-knobs-column">
+            <div class="channel-name-header">
+              <span class="ch-label">CHANNEL 1</span>
+            </div>
+
+            <!-- Botones de Función -->
+            <div class="ch-push-buttons">
+              <button class="rack-push-btn active" id="btn-eqin-ch1">
+                <span class="btn-dot"></span>
+                <span>EQ IN</span>
+              </button>
+              <button class="rack-push-btn" id="btn-range-ch1">
+                <span class="btn-dot"></span>
+                <span class="btn-text">±12 dB</span>
+              </button>
+              <button class="rack-push-btn fbq-btn active" id="btn-fbq-ch1">
+                <span class="btn-dot"></span>
+                <span>FBQ</span>
+              </button>
+            </div>
+
+            <!-- Perillas Rotativas Canal 1 -->
+            <div class="knobs-cluster">
+              <div class="rotary-knob-wrapper" id="knob-in-ch1" title="Ganancia de Entrada">
+                <div class="knob-caption">INPUT</div>
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+                <div class="knob-value" id="val-in-ch1">0.0dB</div>
+              </div>
+
+              <div class="rotary-knob-wrapper" id="knob-lc-ch1" title="Filtro Corte de Graves (Low Cut)">
+                <div class="knob-caption">LOW CUT</div>
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+                <div class="knob-value" id="val-lc-ch1">10Hz</div>
+              </div>
+
+              <div class="rotary-knob-wrapper" id="knob-hc-ch1" title="Filtro Corte de Agudos (High Cut)">
+                <div class="knob-caption">HIGH CUT</div>
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+                <div class="knob-value" id="val-hc-ch1">30.0k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Matriz de 31 Deslizadores (Faders) Canal 1 -->
+        <div class="channel-eq-faders" id="faders-ch1"></div>
+      </article>
+
+      <!-- CANAL 2 (INFERIOR / DERECHO) -->
+      <article class="channel-strip" id="strip-ch2">
+        <div class="channel-master-block">
+          <!-- Vúmetro de 12 Segmentos Canal 2 -->
+          <div class="channel-meter-column" id="meter-ch2">
+            <div class="meter-title">CH 2 METER</div>
+          </div>
+
+          <!-- Controles y Knobs Canal 2 -->
+          <div class="channel-knobs-column">
+            <div class="channel-name-header">
+              <span class="ch-label">CHANNEL 2</span>
+            </div>
+
+            <!-- Botones de Función -->
+            <div class="ch-push-buttons">
+              <button class="rack-push-btn active" id="btn-eqin-ch2">
+                <span class="btn-dot"></span>
+                <span>EQ IN</span>
+              </button>
+              <button class="rack-push-btn" id="btn-range-ch2">
+                <span class="btn-dot"></span>
+                <span class="btn-text">±12 dB</span>
+              </button>
+              <button class="rack-push-btn fbq-btn active" id="btn-fbq-ch2">
+                <span class="btn-dot"></span>
+                <span>FBQ</span>
+              </button>
+            </div>
+
+            <!-- Perillas Rotativas Canal 2 -->
+            <div class="knobs-cluster">
+              <div class="rotary-knob-wrapper" id="knob-in-ch2" title="Ganancia de Entrada">
+                <div class="knob-caption">INPUT</div>
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+                <div class="knob-value" id="val-in-ch2">0.0dB</div>
+              </div>
+
+              <div class="rotary-knob-wrapper" id="knob-lc-ch2" title="Filtro Corte de Graves (Low Cut)">
+                <div class="knob-caption">LOW CUT</div>
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+                <div class="knob-value" id="val-lc-ch2">10Hz</div>
+              </div>
+
+              <div class="rotary-knob-wrapper" id="knob-hc-ch2" title="Filtro Corte de Agudos (High Cut)">
+                <div class="knob-caption">HIGH CUT</div>
+                <div class="knob-body">
+                  <div class="knob-indicator"></div>
+                </div>
+                <div class="knob-value" id="val-hc-ch2">30.0k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Matriz de 31 Deslizadores (Faders) Canal 2 -->
+        <div class="channel-eq-faders" id="faders-ch2"></div>
+      </article>
+
+      <!-- Franja Inferior: Salida de Subwoofer & Opciones -->
+      <div class="rack-footer-strip">
+        <div class="subwoofer-unit">
+          <h4>SUBWOOFER OUTPUT (MONO SUM)</h4>
+          <div class="sub-controls">
+            <div class="rotary-knob-wrapper" id="knob-sub-freq" title="Frecuencia de Crossover">
+              <div class="knob-caption">X-OVER</div>
+              <div class="knob-body" style="width: 26px; height: 26px;">
+                <div class="knob-indicator"></div>
+              </div>
+              <div class="knob-value" id="val-sub-freq" data-val="80">80Hz</div>
+            </div>
+
+            <div class="rotary-knob-wrapper" id="knob-sub-level" title="Nivel de Subwoofer">
+              <div class="knob-caption">LEVEL</div>
+              <div class="knob-body" style="width: 26px; height: 26px;">
+                <div class="knob-indicator"></div>
+              </div>
+              <div class="knob-value" id="val-sub-level" data-val="0">0.0dB</div>
+            </div>
+
+            <button class="rack-push-btn" id="btn-sub-mute" style="padding: 4px 8px;">
+              <span class="btn-dot"></span>
+              <span>SUB MUTE</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="quick-tools-cluster">
+          <span style="font-size: 0.65rem; color: #828c98; letter-spacing: 1px;">
+            SISTEMA FBQ ACTIVO: LEDS ILUMINAN BANDAS CON ENERGÍA / ROJO PARPADEANTE EN RETROALIMENTACIÓN
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Oreja Derecha de Montaje Rack 19" -->
+    <aside class="rack-ear right">
+      <div class="rack-screw-slot"></div>
+      <div class="ear-logo-right">
+        <svg viewBox="0 0 100 100" style="width: 34px; height: 34px;">
+          <circle cx="50" cy="50" r="44" fill="#14171a" stroke="#333" stroke-width="4"/>
+          <rect x="22" y="44" width="6" height="12" rx="3" fill="#ff7700"/>
+          <rect x="33" y="32" width="6" height="36" rx="3" fill="#ffaa00"/>
+          <rect x="44" y="20" width="6" height="60" rx="3" fill="#00e5ff"/>
+          <rect x="55" y="28" width="6" height="44" rx="3" fill="#ffaa00"/>
+          <rect x="66" y="38" width="6" height="24" rx="3" fill="#ff7700"/>
+        </svg>
+        <span style="font-size: 0.58rem; letter-spacing: 0.5px;">AcousticSense</span>
+      </div>
+      <div class="rack-screw-slot"></div>
+    </aside>
+
+  </main>
+
+  <!-- ==================== MODAL: ANALIZADOR DE ESPECTRO RTA ==================== -->
+  <div class="modal-overlay" id="modal-rta">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>Analizador de Espectro RTA en Tiempo Real (60 FPS)</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <canvas id="rta-canvas" class="rta-canvas-box" width="600" height="240"></canvas>
+      <div style="font-size: 0.78rem; color: #9aa5b1; display: flex; justify-content: space-between;">
+        <span><strong style="color: #00e5ff;">Línea Cian:</strong> Curva de Ecualización resultante</span>
+        <span><strong style="color: #ffaa00;">Barras Ámbar / Rojo:</strong> Espectro de Frecuencia y Detección FBQ</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: GENERADOR DE SEÑALES ==================== -->
+  <div class="modal-overlay" id="modal-generator">
+    <div class="modal-window" style="max-width: 460px;">
+      <div class="modal-header">
+        <h3>Generador de Señales de Calibración</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p style="font-size: 0.82rem; color: #a0aec0;">
+          Genera señales acústicas de prueba estándar para calibrar altavoces, salas y verificar respuesta de frecuencias:
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <button class="action-btn gen-type-btn" data-type="pink">Ruido Rosa (Pink Noise)</button>
+          <button class="action-btn gen-type-btn" data-type="white">Ruido Blanco (White Noise)</button>
+          <button class="action-btn gen-type-btn" data-type="sweep">Barrido 20Hz - 20kHz</button>
+          <button class="action-btn gen-type-btn" data-type="sine">Tono Seno Continuo</button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+          <label style="font-size: 0.8rem; color: #cbd5e1;">Frecuencia del Tono Seno:</label>
+          <input type="number" id="gen-freq-input" value="1000" min="20" max="20000" style="background:#0f1114; border:1px solid #3d4754; color:#fff; padding:4px 8px; border-radius:4px; width:90px;">
+          <span style="font-size: 0.8rem; color: #ffaa00;">Hz</span>
+        </div>
+
+        <button class="action-btn" id="btn-stop-generator" style="background:#801b1b; color:#fff; margin-top:10px;">
+          Detener Generador
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: GUÍA DE USO MULTIPLATAFORMA ==================== -->
+  <div class="modal-overlay" id="modal-guide">
+    <div class="modal-window guide-content">
+      <div class="modal-header">
+        <h3>Guía: Cómo usar este Ecualizador en PC, Android y otros</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      
+      <h4>1. En cualquier Navegador (PC, Mac, Linux, Android, iOS):</h4>
+      <p>
+        Funciona inmediatamente sin instalar nada. Puedes arrastrar cualquier canción (MP3, WAV, FLAC) al reproductor superior o usar el botón <strong>📁 Archivo</strong>.
+      </p>
+
+      <h4>2. En Android (Instalar como App PWA):</h4>
+      <p>
+        Abre este sitio en Chrome en tu teléfono Android, toca los 3 puntos superiores del navegador y selecciona <strong>"Agregar a la pantalla principal"</strong> o <strong>"Instalar aplicación"</strong>. Tendrás un icono directo en tu pantalla de inicio que abre la app a pantalla completa sin barras de navegador y 100% offline.
+      </p>
+
+      <h4>3. Ecualizar Audio en Vivo (Micrófono, Instrumentos o Mezcladores):</h4>
+      <p>
+        Presiona el botón <strong>🎤 Mic / Línea</strong>. El ecualizador procesará en tiempo real la señal de tu tarjeta de sonido, consola USB o micrófono con latencia ultra baja.
+      </p>
+
+      <h4>4. Ecualizar Todo el Sonido de Windows (Spotify, YouTube, Juegos):</h4>
+      <p>
+        Diseña tu curva de 31 bandas aquí y haz clic en <strong>⚙️ Exportar APO</strong>. Guardará un archivo <code>config_31band_equalizer_apo.txt</code>. Copia su contenido en <strong>Equalizer APO</strong> en Windows para que afecte todo el audio de tu computadora. También puedes usar un cable virtual como <em>VB-Audio Virtual Cable</em> para enrutar el audio de la PC directo a la entrada en vivo.
+      </p>
+
+      <h4>5. Sistema FBQ de Detección de Retroalimentación:</h4>
+      <p>
+        Al activar <strong>FBQ</strong>, las puntas de los 31 deslizadores se iluminan según la energía de cada banda. Si se produce un acople o retroalimentación acústica en vivo, el deslizador afectado <strong>parpadeará intensamente en rojo</strong>, permitiéndote bajar esa frecuencia de inmediato como en la máquina real Behringer.
+      </p>
+
+      <h4>6. Atajos de Uso:</h4>
+      <p>
+        - <strong>Doble clic</strong> en cualquier fader o perilla para restablecer a 0 dB.<br>
+        - <strong>Rueda del ratón</strong> sobre un fader para ajuste fino de 0.5 dB.<br>
+        - <strong>Shift + Arrastrar</strong> para microajustes precisos.
+      </p>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: LISTA DE REPRODUCCIÓN (PLAYLIST) ==================== -->
+  <div class="modal-overlay" id="modal-playlist">
+    <div class="modal-window" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3>Canciones de la Carpeta (<span id="modal-track-count">0</span>)</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <input type="text" id="playlist-search-input" placeholder="Buscar canción en la lista..." style="width: 100%; background:#0f1114; border:1px solid #333a44; color:#fff; padding:6px 10px; border-radius:4px; font-size:0.8rem;">
+      </div>
+      <div id="playlist-items-container" style="max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+        <p style="font-size: 0.8rem; color: #8fa0b3; text-align: center; padding: 20px;">No has cargado ninguna carpeta o archivo todavía.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notificador -->
+  <div class="toast-msg" id="toast-msg"></div>
+
+  <!-- Scripts (Bundle Autónomo: funciona tanto con servidor como haciendo doble clic directo en index.html) -->
+  <script src="js/bundle.js"></script>
+</body>
+</html>
