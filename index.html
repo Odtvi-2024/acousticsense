@@ -1318,26 +1318,29 @@ body {
     <div class="brand-badge">
       <h1>ACOUSTICSENSE</h1>
       <span class="model-tag">FBQ-31 DIGITAL</span>
+      <button class="action-btn" id="btn-lang-toggle" title="Cambiar Idioma / Switch Language (ES/EN)" style="margin-left: 6px; font-weight: 800; padding: 3px 8px; font-size: 0.72rem; border-color: #00e5ff; color: #00e5ff; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+        <span>🌐</span> <span id="lang-label">EN</span>
+      </button>
     </div>
 
     <!-- Selector de Fuentes de Audio -->
     <div class="source-selectors">
       <button class="source-btn" id="btn-src-file" title="Seleccionar uno o varios archivos MP3, WAV, FLAC...">
-        <span>📁</span> Archivos
+        <span>📁</span> <span id="txt-src-file">Archivos</span>
       </button>
       <input type="file" id="file-input" accept="audio/*" multiple style="display: none;">
 
       <button class="source-btn" id="btn-src-folder" title="Seleccionar una carpeta completa de música">
-        <span>📂</span> Carpeta
+        <span>📂</span> <span id="txt-src-folder">Carpeta</span>
       </button>
       <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
 
       <button class="source-btn" id="btn-src-mic" title="Procesar audio en vivo desde Micrófono o Interfaz de Audio">
-        <span>🎤</span> Mic / Línea
+        <span>🎤</span> <span id="txt-src-mic">Mic / Línea</span>
       </button>
 
       <button class="source-btn" id="btn-src-gen" title="Generador de Ruido Rosa, Blanco y Seno">
-        <span>⚡</span> Generador
+        <span>⚡</span> <span id="txt-src-gen">Generador</span>
       </button>
     </div>
 
@@ -1362,19 +1365,19 @@ body {
     <!-- Presets y Herramientas -->
     <div class="preset-section">
       <select class="preset-select" id="preset-selector"></select>
-      <button class="action-btn" id="btn-save-preset" title="Guardar configuración actual como preset">💾 Guardar</button>
+      <button class="action-btn" id="btn-save-preset" title="Guardar configuración actual como preset"><span>💾</span> <span id="txt-save-preset">Guardar</span></button>
       <button class="action-btn highlight" id="btn-open-rta" title="Ver analizador de espectro de audio en tiempo real">📊 RTA</button>
-      <button class="action-btn" id="btn-export-apo" title="Exportar archivo de configuración para Equalizer APO (Windows)">⚙️ Exportar APO</button>
-      <button class="action-btn highlight" id="btn-install-app" style="background: linear-gradient(180deg, #ff8800 0%, #e65c00 100%); color: #000; font-weight: 800; border-color: #ffaa00;" title="Instalar en tu Celular o PC">📲 Instalar App</button>
-      <button class="action-btn" id="btn-open-guide" title="Instrucciones para PC, Android y otros">❓ Guía</button>
+      <button class="action-btn" id="btn-export-apo" title="Exportar archivo de configuración para Equalizer APO (Windows)"><span>⚙️</span> <span id="txt-export-apo">Exportar APO</span></button>
+      <button class="action-btn highlight" id="btn-install-app" style="background: linear-gradient(180deg, #ff8800 0%, #e65c00 100%); color: #000; font-weight: 800; border-color: #ffaa00;" title="Instalar en tu Celular o PC"><span>📲</span> <span id="txt-install-app">Instalar App</span></button>
+      <button class="action-btn" id="btn-open-guide" title="Instrucciones para PC, Android y otros"><span>❓</span> <span id="txt-open-guide">Guía</span></button>
     </div>
   </header>
 
   <!-- Pestañas de Vista Rápida para Celulares y Tablets -->
   <div class="mobile-view-tabs" style="display: none;">
-    <button class="mobile-tab-btn active" data-view="both">Ambos Canales (L + R)</button>
-    <button class="mobile-tab-btn" data-view="ch1">Canal 1 (Izquierdo)</button>
-    <button class="mobile-tab-btn" data-view="ch2">Canal 2 (Derecho)</button>
+    <button class="mobile-tab-btn active" data-view="both"><span id="txt-tab-both">Ambos Canales (L + R)</span></button>
+    <button class="mobile-tab-btn" data-view="ch1"><span id="txt-tab-ch1">Canal 1 (Izquierdo)</span></button>
+    <button class="mobile-tab-btn" data-view="ch2"><span id="txt-tab-ch2">Canal 2 (Derecho)</span></button>
   </div>
 
   <!-- ==================== CHASIS RACK 19" PRINCIPAL ==================== -->
@@ -1398,10 +1401,10 @@ body {
         </div>
         <div class="rack-global-tools">
           <button class="global-toggle active" id="btn-stereo-link">
-            <span class="indicator-led"></span> Enlace Estéreo (L+R)
+            <span class="indicator-led"></span> <span id="txt-stereo-link">Enlace Estéreo (L+R)</span>
           </button>
           <button class="global-toggle" id="btn-reset-all">
-            <span>&#8634;</span> Restablecer Plano (0 dB)
+            <span>&#8634;</span> <span id="txt-reset-all">Restablecer Plano (0 dB)</span>
           </button>
         </div>
       </div>
@@ -1659,7 +1662,7 @@ body {
 
       <h4>4. Ecualizar Todo el Sonido de Windows (Spotify, YouTube, Juegos):</h4>
       <p>
-        Diseña tu curva de 31 bandas aquí y haz clic en <strong>⚙️ Exportar APO</strong>. Guardará un archivo <code>config_31band_equalizer_apo.txt</code>. Copia su contenido en <strong>Equalizer APO</strong> en Windows para que afecte todo el audio de tu computadora. También puedes usar un cable virtual como <em>VB-Audio Virtual Cable</em> para enrutar el audio de la PC directo a la entrada en vivo.
+        Diseña tu curva de 31 bandas aquí y haz clic en <strong><span>⚙️</span> <span id="txt-export-apo">Exportar APO</span></strong>. Guardará un archivo <code>config_31band_equalizer_apo.txt</code>. Copia su contenido en <strong>Equalizer APO</strong> en Windows para que afecte todo el audio de tu computadora. También puedes usar un cable virtual como <em>VB-Audio Virtual Cable</em> para enrutar el audio de la PC directo a la entrada en vivo.
       </p>
 
       <h4>5. Sistema FBQ de Detección de Retroalimentación:</h4>
@@ -1747,7 +1750,9 @@ const ISO_LABELS = [
 const PRESETS = {
   flat: {
     name: 'Plano (Flat / Bypass)',
+    nameEn: 'Flat (0 dB / Bypass)',
     description: 'Respuesta plana sin alteración de ganancia',
+    descriptionEn: 'Flat response with zero gain alteration',
     lowCut: 10,
     highCut: 30000,
     inputGain: 0,
@@ -1755,7 +1760,9 @@ const PRESETS = {
   },
   vShapeClear: {
     name: '✨ Curva en V (Bajos y Agudos Claros)',
+    nameEn: '✨ V-Shape (Punchy Bass & Air)',
     description: 'Pegada sólida de graves, medios limpios sin barro y agudos cristalinos con aire',
+    descriptionEn: 'Solid bass punch, clean un-muddled mids, and sparkling airy highs',
     lowCut: 32,
     highCut: 28000,
     inputGain: -1.5,
@@ -1767,7 +1774,9 @@ const PRESETS = {
   },
   bassBoost: {
     name: 'Refuerzo de Graves (Bass Boost)',
+    nameEn: 'Bass Boost (+Sub Punch)',
     description: 'Potencia frecuencias subgraves y bombos',
+    descriptionEn: 'Boosts sub-bass and kick punch frequencies',
     lowCut: 20,
     highCut: 25000,
     inputGain: -2,
@@ -1775,7 +1784,9 @@ const PRESETS = {
   },
   rock: {
     name: 'Rock / Curva Sonrisa (V-Shape)',
+    nameEn: 'Rock / Smile Curve (V-Shape)',
     description: 'Graves sólidos y agudos brillantes con medios limpios',
+    descriptionEn: 'Solid lows and bright highs with scoop mids',
     lowCut: 25,
     highCut: 22000,
     inputGain: -1,
@@ -1783,7 +1794,9 @@ const PRESETS = {
   },
   vocalClarity: {
     name: 'Claridad Vocal (Vocal / Discurso)',
+    nameEn: 'Vocal Clarity (Speech / Lead)',
     description: 'Reduce resonancias graves y resalta inteligibilidad de la voz',
+    descriptionEn: 'Cuts low-end mud and highlights voice intelligibility',
     lowCut: 80,
     highCut: 18000,
     inputGain: 0,
@@ -1791,7 +1804,9 @@ const PRESETS = {
   },
   clubEdm: {
     name: 'Club / Electrónica (EDM Punch)',
+    nameEn: 'Club / Electronic (EDM Punch)',
     description: 'Golpe seco de 50-80Hz y agudos cristalinos para música electrónica',
+    descriptionEn: 'Tight 50-80Hz kick hit and crisp highs for electronic tracks',
     lowCut: 25,
     highCut: 24000,
     inputGain: -2,
@@ -1799,7 +1814,9 @@ const PRESETS = {
   },
   acoustic: {
     name: 'Guitarra Acústica & En vivo',
+    nameEn: 'Acoustic Guitar & Live Instruments',
     description: 'Corta frecuencias retumbantes de caja y realza armónicos',
+    descriptionEn: 'Cuts boxy resonance and enhances acoustic harmonics',
     lowCut: 50,
     highCut: 20000,
     inputGain: 0,
@@ -1807,7 +1824,9 @@ const PRESETS = {
   },
   antiFeedback: {
     name: 'Supresor de Acoples (Anti-Feedback)',
+    nameEn: 'Feedback Suppressor (Anti-Feedback)',
     description: 'Atenúa bandas críticas comunes de retroalimentación en microfonía en vivo',
+    descriptionEn: 'Attenuates common live microphone feedback spike frequencies',
     lowCut: 40,
     highCut: 16000,
     inputGain: 0,
@@ -1815,7 +1834,9 @@ const PRESETS = {
   },
   radioBroadcast: {
     name: 'Locución / Radio Broadcast',
+    nameEn: 'Voiceover / Radio Broadcast',
     description: 'Efecto de presencia cálida con cuerpo y compresión tímbrica para podcast y streaming',
+    descriptionEn: 'Warm presence and broadcast tone for podcasts and streaming',
     lowCut: 60,
     highCut: 16000,
     inputGain: 0,
@@ -2462,6 +2483,10 @@ class UIController {
     this.playlist = [];
     this.currentTrackIndex = -1;
 
+    // Sistema Bilingüe Internacional (ES / EN)
+    const browserIsEn = typeof navigator !== 'undefined' && navigator.language && navigator.language.toLowerCase().startsWith('en');
+    this.currentLang = localStorage.getItem('acousticsense_lang') || (browserIsEn ? 'en' : 'es');
+
     // Umbrales para el Vúmetro LED de 12 segmentos (dBFS)
     this.meterThresholds = [
       { db: -30, color: 'green' },
@@ -2491,6 +2516,8 @@ class UIController {
     this.bindPresets();
     this.bindModals();
     this.bindMobileTabs();
+    this.bindLanguageToggle();
+    this.applyTranslations();
 
     // Iniciar bucle visual 60 FPS
     this.startRenderLoop();
@@ -3239,12 +3266,14 @@ class UIController {
   refreshPresetDropdown() {
     const select = document.getElementById('preset-selector');
     if (!select) return;
-    select.innerHTML = '<option value="">-- Seleccionar Curva / Preset --</option>';
+    const isEn = this.currentLang === 'en';
+    const placeholder = isEn ? '-- Select EQ Curve / Preset --' : '-- Seleccionar Curva / Preset --';
+    select.innerHTML = `<option value="">${placeholder}</option>`;
 
     Object.entries(this.presets).forEach(([key, preset]) => {
       const opt = document.createElement('option');
       opt.value = key;
-      opt.textContent = preset.name;
+      opt.textContent = isEn ? (preset.nameEn || preset.name) : preset.name;
       select.appendChild(opt);
     });
   }
@@ -3501,6 +3530,155 @@ class UIController {
       ctx.fillStyle = isFeedback ? '#ff1100' : 'rgba(255, 170, 0, 0.7)';
       ctx.fillRect(x, y, barWidth, barH);
     }
+  }
+
+  // --- Sistema de Idioma Internacional (Español / English) ---
+  getTranslations() {
+    return {
+      es: {
+        srcFiles: 'Archivos',
+        srcFolder: 'Carpeta',
+        srcMic: 'Mic / Línea',
+        srcGen: 'Generador',
+        savePreset: 'Guardar',
+        exportApo: 'Exportar APO',
+        installApp: 'Instalar App',
+        guide: 'Guía',
+        stereoLink: 'Enlace Estéreo (L+R)',
+        resetFlat: 'Restablecer Plano (0 dB)',
+        tabBoth: 'Ambos Canales (L + R)',
+        tabCh1: 'Canal 1 (Izquierdo)',
+        tabCh2: 'Canal 2 (Derecho)',
+        selectPreset: '-- Seleccionar Curva / Preset --',
+        noTracks: 'Sin canciones cargadas',
+        zeroTracks: '0 canciones',
+        syntheticSignal: 'Señal sintética',
+        noSignal: 'Sin señal',
+        enterPresetName: 'Ingresa el nombre para tu preset personalizado:',
+        presetLoaded: 'Preset cargado:',
+        presetSaved: 'Preset "{name}" guardado exitosamente',
+        apoExported: 'Archivo Equalizer APO exportado (.txt)',
+        folderLoaded: 'Carpeta cargada: {n} canciones encontradas',
+        audioError: 'No se pudo acceder al micrófono o dispositivo de audio. Permite los permisos en tu navegador.',
+        playlistEmpty: 'No has cargado ninguna carpeta o archivo todavía.<br><br>Usa el botón <strong>📂 Carpeta</strong> para cargar todo tu álbum o carpeta de música.',
+        searchTrack: 'Buscar canción en la lista...',
+        genTitle: 'Generador de Señales de Calibración',
+        genDesc: 'Genera señales acústicas de prueba estándar para calibrar altavoces, salas y verificar respuesta de frecuencias:',
+        genStop: 'Detener Señal',
+        footerTip: 'Doble clic en cualquier fader o perilla para reiniciar a 0 dB'
+      },
+      en: {
+        srcFiles: 'Files',
+        srcFolder: 'Folder',
+        srcMic: 'Mic / Line',
+        srcGen: 'Generator',
+        savePreset: 'Save',
+        exportApo: 'Export APO',
+        installApp: 'Install App',
+        guide: 'Guide',
+        stereoLink: 'Stereo Link (L+R)',
+        resetFlat: 'Reset Flat (0 dB)',
+        tabBoth: 'Both Channels (L + R)',
+        tabCh1: 'Channel 1 (Left)',
+        tabCh2: 'Channel 2 (Right)',
+        selectPreset: '-- Select EQ Curve / Preset --',
+        noTracks: 'No tracks loaded',
+        zeroTracks: '0 tracks',
+        syntheticSignal: 'Synthetic signal',
+        noSignal: 'No signal',
+        enterPresetName: 'Enter a name for your custom preset:',
+        presetLoaded: 'Preset loaded:',
+        presetSaved: 'Preset "{name}" saved successfully',
+        apoExported: 'Equalizer APO config exported (.txt)',
+        folderLoaded: 'Folder loaded: {n} tracks found',
+        audioError: 'Could not access audio input. Please grant microphone permissions in your browser.',
+        playlistEmpty: 'No tracks or folder loaded yet.<br><br>Use the <strong>📂 Folder</strong> button to load an entire music folder.',
+        searchTrack: 'Search track in playlist...',
+        genTitle: 'Calibration Signal Generator',
+        genDesc: 'Generates standard acoustic test signals for speaker calibration, room tuning, and frequency response:',
+        genStop: 'Stop Signal',
+        footerTip: 'Double-click any fader or knob to reset to 0 dB'
+      }
+    };
+  }
+
+  bindLanguageToggle() {
+    const btn = document.getElementById('btn-lang-toggle');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const nextLang = this.currentLang === 'es' ? 'en' : 'es';
+        this.setLanguage(nextLang);
+      });
+    }
+  }
+
+  setLanguage(lang) {
+    this.currentLang = lang;
+    localStorage.setItem('acousticsense_lang', lang);
+    this.applyTranslations();
+    this.refreshPresetDropdown();
+    this.showToast(lang === 'en' ? 'Language switched to English' : 'Idioma cambiado a Español');
+  }
+
+  applyTranslations() {
+    const t = this.getTranslations()[this.currentLang] || this.getTranslations().es;
+    const isEn = this.currentLang === 'en';
+
+    // Etiqueta del botón de idioma
+    const langLabel = document.getElementById('lang-label');
+    if (langLabel) langLabel.textContent = isEn ? 'ES' : 'EN';
+
+    // Botones de fuente y herramientas
+    const tMap = {
+      'txt-src-file': t.srcFiles,
+      'txt-src-folder': t.srcFolder,
+      'txt-src-mic': t.srcMic,
+      'txt-src-gen': t.srcGen,
+      'txt-save-preset': t.savePreset,
+      'txt-export-apo': t.exportApo,
+      'txt-install-app': t.installApp,
+      'txt-open-guide': t.guide,
+      'txt-stereo-link': t.stereoLink,
+      'txt-reset-all': t.resetFlat,
+      'txt-tab-both': t.tabBoth,
+      'txt-tab-ch1': t.tabCh1,
+      'txt-tab-ch2': t.tabCh2
+    };
+
+    Object.entries(tMap).forEach(([id, text]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    });
+
+    // Texto de archivos si no hay nada cargado
+    const fileNameEl = document.getElementById('file-name-display');
+    if (fileNameEl && (fileNameEl.textContent === 'Sin canciones cargadas' || fileNameEl.textContent === 'No tracks loaded')) {
+      fileNameEl.textContent = t.noTracks;
+    }
+
+    const playlistCounter = document.getElementById('playlist-counter');
+    if (playlistCounter && (playlistCounter.textContent === '0 canciones' || playlistCounter.textContent === '0 tracks')) {
+      playlistCounter.textContent = t.zeroTracks;
+    }
+
+    // Modal generador
+    const genModal = document.getElementById('modal-generator');
+    if (genModal) {
+      const h3 = genModal.querySelector('.modal-header h3');
+      if (h3) h3.textContent = t.genTitle;
+      const desc = genModal.querySelector('p');
+      if (desc) desc.textContent = t.genDesc;
+      const stopBtn = document.getElementById('btn-stop-generator');
+      if (stopBtn) stopBtn.textContent = t.genStop;
+    }
+
+    // Buscador de playlist
+    const searchInput = document.getElementById('playlist-search-input');
+    if (searchInput) searchInput.placeholder = t.searchTrack;
+
+    // Consejo del pie de página
+    const quickToolsCluster = document.querySelector('.quick-tools-cluster span');
+    if (quickToolsCluster) quickToolsCluster.textContent = t.footerTip;
   }
 
   showToast(text) {
